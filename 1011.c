@@ -45,10 +45,15 @@ https://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%E2%8B%AF
 
 int main()
 {
-	int T;
-	scanf("%d", T);
+	int T, x ,y, rst;
+	scanf("%d", &T);
 	for (int t = 0; t < T; t++)
 	{
-
+		scanf("%d %d", &x, &y);
+		rst = x - y;
+		for (int i = 1; i <= rst; i++)
+		{
+			int k = i(i)
+		}
 	}
 }
