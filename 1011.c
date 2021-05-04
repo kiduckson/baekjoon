@@ -40,20 +40,41 @@ https://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%E2%8B%AF
 
  n(n+1)보다 크고 n+1(n+1+1)	보다 작으면 n+1이다
 
+1. 거리에 루트
+2. 라운드
+3. 예외처리 1 = 1
+4. 기본처리 step =  sqrt(dst) * 2
+5. 작거나 같거나
+
 */
+
 #include <stdio.h>
+#include <math.h>
 
 int main()
 {
-	int T, x ,y, rst;
-	scanf("%d", &T);
-	for (int t = 0; t < T; t++)
+	int times;
+	long long x ,y;
+	double dst;
+	scanf("%d", &times);
+	for (int t = 0; t < times; t++)
 	{
-		scanf("%d %d", &x, &y);
-		rst = x - y;
-		for (int i = 1; i <= rst; i++)
+		scanf("%lld %lld", &x, &y);
+		dst = sqrt(y - x);
+		if (dst == 0)
 		{
-			int k = i(i)
+			printf("%d\n", 0);
+			break ;
+		}
+		for (int i = 0; i <= (y * 2); i++)
+		{
+			if ((double)i >= dst * 2)
+			{
+				printf("%d\n", i - 1);
+				break ;
+			}
 		}
 	}
+	return (0);
 }
+
