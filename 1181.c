@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <string.h>
 
 typedef		struct {
 	char	str[51];
 	int		len;
-} string;
-
+} words;
 
 int b_strlen(char *str)
 {
@@ -18,28 +17,31 @@ int b_strlen(char *str)
 	return len;
 }
 
-int b_compare(char *s1, char *s2){
+int b_compare(words s1, words s2)
+{
 	int idx;
 	idx = 0;
-	while (s1[idx] && s2[idx])
+	if (s1.len > s2.len)
+		return (1);
+	while (s1.str[idx] && s2.str[idx])
 	{
-		if(s1[idx] < s2[idx])
+		if(s1.str[idx] < s2.str[idx])
 			return (1);
-		else if (s1[idx] > s2[idx])
+		else if (s1.str[idx] > s2.str[idx])
 			return (0);
 		idx++;
 	}
 	return (-1);
 }
 
-void merge(string arr[], int l, int m, int r)
+void merge(words arr[], int l, int m, int r)
 {
     int i, j, k, idx_l, idx_r;
 
 	idx_l = m - l + 1;
     idx_r = r - m;
 
-	string arr_l[idx_l], arr_r[idx_r];
+	words arr_l[idx_l], arr_r[idx_r];
 
     for (i = 0; i < idx_l; i++)
         arr_l[i] = arr[l + i];
@@ -59,7 +61,7 @@ void merge(string arr[], int l, int m, int r)
 			j++;
 		}
 		else{
-			if(b_compare(arr_l[i].str, arr_r[j].str)){
+			if(b_compare(arr_l[i], arr_r[j])){
 				arr[k] = arr_l[i];
 				i++;
 			}
@@ -76,7 +78,7 @@ void merge(string arr[], int l, int m, int r)
 		arr[k++] = arr_r[j++];
 }
 
-void mergeSort(string arr[], int l, int r)
+void mergeSort(words arr[], int l, int r)
 {
 	if (l < r){
         int m = l + (r - l) / 2;
@@ -89,21 +91,19 @@ void mergeSort(string arr[], int l, int r)
 int main()
 {
 	int n;
-	string *arr;
+	words *arr;
 
 	scanf("%d", &n);
-	arr = (string*)malloc(sizeof(string) * n);
+	arr = (words*)malloc(sizeof(words) * n);
 	for (int i = 0; i < n; i++){
 		scanf("%s", arr[i].str);
 		arr[i].len = b_strlen(arr[i].str);
 	}
 	mergeSort(arr, 0, n - 1);
 	for (int i = 0; i < n; i++){
-		if (i > 0){
-			if (b_compare(arr[i].str, arr[i-1].str) != -1)
+		if (i > 0)
+			if (strcmp(arr[i].str, arr[i-1].str) == 0)
 				continue;
-		}
-
 		printf("%s\n", arr[i].str);
 	}
 	free(arr);
