@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+// https://pythonq.com/so/c/1515011
+// https://velog.io/@chelmini/BOJ-%EB%B0%B1%EC%A4%80-18870%EB%B2%88-%EC%A2%8C%ED%91%9C-%EC%95%95%EC%B6%95
 int main()
 {
 	int n, i, *arr, *counter, min, max, offset, range, idx;

@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int sorted[1000000];
-
 void merge(int sorted[], int l, int m, int r)
 {
 	int i, j, k, idx_l, idx_r;
@@ -22,7 +20,7 @@ void merge(int sorted[], int l, int m, int r)
 			sorted[k] = arr_l[i];
 			i++;
 		}
-		else {
+		else if (arr_l[i] > arr_r[j]) {
 			sorted[k] = arr_r[j];
 			j++;
 		}
@@ -44,24 +42,45 @@ void mergeSort(int sorted[], int l, int r){
 	}
 }
 
+int binarySearch(int arr[], int target, int len){
+	int low = 0;
+	int high = len - 1;
+	int mid;
+
+	while (low <= high) {
+		mid = (low + high) / 2;
+
+		if (arr[mid] == target)
+			return mid;
+		else if (arr[mid]>target)
+			high=mid-1;
+		else
+			low=mid+1;
+	}
+	return -1;
+}
+
 int main()
 {
-	int n, *arr;
+	int *arr, *sorted, i, idx, j, n;
 	scanf("%d", &n);
 	arr = (int *)malloc(n * sizeof(int));
+	sorted = (int *)malloc(n * sizeof(int));
 	for (int i = 0; i < n; i++){
 		scanf("%d", &arr[i]);
 		sorted[i] = arr[i];
 	}
 	mergeSort(sorted, 0, n-1);
-	for (int i = 0; i < n; i++){
-		for (int j = 0; j < n; j++){
-			if (sorted[j] == arr[i]){
-				printf("%d ", j);
-				break ;
-			}
-		}
+	j = 0;
+	for (i = 0; i < n - 1; i++)
+		if (sorted[i] != sorted[i+1])
+			sorted[j++] = sorted[i];
+	sorted[j++] = sorted[n-1];
+	for (i = 0; i < n; i++){
+		idx = binarySearch(sorted, arr[i], j);
+		printf("%d ", idx);
 	}
 	free(arr);
+	free(sorted);
 	return(0);
 }
