@@ -3,9 +3,8 @@
 
 int main()
 {
-	int x, y, i, j;
+	int x, y, i, j, k, l, wsum, bsum, ans;
 	char **arr;
-	int ans[51][51] = {0};
 
 	scanf("%d %d", &y, &x);
 	arr = (char **)malloc(sizeof(char *) * y);
@@ -14,61 +13,37 @@ int main()
 		arr[i] = (char *)malloc(x + 1);
 		scanf("%s", arr[i]);
 	}
-	for (i = 0; i < y; i++)
-	{
-		for (j = 0; j < x; j++)
-		{
-			// 나머지
-			if (j > 0 && j < x - 1 && i > 0 && i < y - 1)
-			{
-				if (arr[i][j] == arr[i - 1][j])
-					ans[i][j]++;
-				if (arr[i][j] == arr[i + 1][j])
-					ans[i][j]++;
-				if (arr[i][j] == arr[i][j - 1])
-					ans[i][j]++;
-				if (arr[i][j] == arr[i][j + 1])
-					ans[i][j]++;
+	ans = x * y / 2;
+	for (i = 0; i < y - 7; i++){
+		for (j = 0; j < x - 7; j++){
+			wsum = bsum = 0;
+			for (k = i; k < i + 8; k++){
+				for (l = j; l < j + 8; l++){
+					if((k + l) % 2)
+					{
+						if (arr[k][l] == 'B')
+							wsum++;
+						else
+							bsum++;
+					}
+					else
+					{
+						if (arr[k][l] == 'B')
+							bsum++;
+						else
+							wsum++;
+					}
+				}
 			}
-			// x , y == 0;
-			else if (j == 0 && i == 0)
-			{
-				if (arr[i][j] == arr[i + 1][j])
-					ans[i][j]++;
-				if (arr[i][j] == arr[i][j + 1])
-					ans[i][j]++;
-			}
-			// x == 0; y == len;
-			else if (j == x - 1 && i == 0)
-			{
-				if (arr[i][j] == arr[i + 1][j])
-					ans[i][j]++;
-				if (arr[i][j] == arr[i][j - 1])
-					ans[i][j]++;
-			}
-			// x == len; y == 0
-			else if (j == 0 && i == 0)
-			{
-				if (arr[i][j] == arr[i + 1][j])
-					ans[i][j]++;
-				if (arr[i][j] == arr[i][j + 1])
-					ans[i][j]++;
-			}
-			// x , y == len
-			else if (j == x - 1 && i == y - 1)
-			{
-				if (arr[i][j] == arr[i + 1][j])
-					ans[i][j]++;
-				if (arr[i][j] == arr[i][j - 1])
-					ans[i][j]++;
-			}
+			bsum = bsum > wsum ? wsum : bsum;
+			ans = ans > bsum ? bsum : ans;
 		}
 	}
-	for (i = 0; i < y; i++)
-	{
-		printf("\n");
-		for (j = 0; j < x; j++)
-			printf("%d", ans[i][j]);
-	}
+	printf("%d", ans);
 	free(arr);
+	return (0);
 }
+
+
+
+
